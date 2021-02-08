@@ -2,10 +2,7 @@ package com.jrp.pma.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity(name = "employees")
@@ -17,6 +14,10 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String email;
+    // Many employees to one project
+    @ManyToOne
+    @JoinColumn(name = "project_id") // will create new column in employees table called "project_id" -> foreign key
+    private Project project;
 
     public Employee() {
     }
