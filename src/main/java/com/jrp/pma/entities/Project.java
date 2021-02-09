@@ -3,6 +3,8 @@ package com.jrp.pma.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,9 +26,16 @@ public class Project {
 
     public Project() {}
 
-    public Project(String name, String stage, String description, List<Employee> employees) {
+    public Project(String name, String stage, String description) {
         this.name = name;
         this.stage = stage;
         this.description = description;
+    }
+
+    public void addEmployee(Employee employee) {
+        if (employees == null) {
+            employees = new ArrayList<>();
+        }
+        employees.add(employee);
     }
 }
