@@ -3,6 +3,7 @@ package com.jrp.pma.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity(name = "employees")
@@ -14,13 +15,14 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String email;
-    // Many employees to one project
     // Lazy => when loading a project or multiple projects, the associated employees are NOT loaded
     // Eager => when loading a project or multiple projects, the associated employees ARE loaded
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST},
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST},
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id") // will create new column in employees table called "project_id" -> foreign key
-    private Project project;
+    @JoinTable(name = "project_employee",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id"))
+    private List<Project> projects;
 
     public Employee() {
     }

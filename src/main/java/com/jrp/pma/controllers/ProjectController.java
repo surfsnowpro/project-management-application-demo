@@ -49,7 +49,7 @@ public class ProjectController {
 
         Iterable<Employee> empList = employeeRepo.findAllById(employees);
         for (Employee employee : empList) {
-            employee.setProject(project);
+            employee.setProjects(project);
         }
         employeeRepo.saveAll(empList);
         // Use a redirect to prevent duplicate submissions

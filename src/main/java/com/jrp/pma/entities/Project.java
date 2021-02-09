@@ -15,8 +15,11 @@ public class Project {
     private String name;
     private String stage; // NOTSTARTED, COMPLETED, INPROGRESS
     private String description;
-    // One project can have many employees
-    @OneToMany(mappedBy = "project") // mappedBy => have to define a property in employee called "project" w/ type Project
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST},
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "project_employee",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
     private List<Employee> employees;
 
     public Project() {}
