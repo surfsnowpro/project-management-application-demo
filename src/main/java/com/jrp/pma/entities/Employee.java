@@ -11,7 +11,7 @@ import java.util.List;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // instead of auto, hibernate will rely on the database column for id to determine next id
     private Long employeeId;
     private String firstName;
     private String lastName;
