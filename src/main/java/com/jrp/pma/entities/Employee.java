@@ -3,7 +3,6 @@ package com.jrp.pma.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,7 +10,12 @@ import java.util.List;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // instead of auto, hibernate will rely on the database column for id to determine next id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_generator") // user the seq specified in the schema
+    @SequenceGenerator(
+            name = "employee_generator",
+            sequenceName = "employee_seq",
+            allocationSize = 1
+    )
     private Long employeeId;
     private String firstName;
     private String lastName;

@@ -1,5 +1,6 @@
 -- INSERT EMPLOYEES
-insert into employees (employee_id, first_name, last_name, email) values (1, 'John', 'Warton', 'warton@gmail.com');
+-- For sequences, change the hard coded id to "nextval('seq_name`)
+insert into employees (employee_id, first_name, last_name, email) values (nextval('employee_seq'), 'John', 'Warton', 'warton@gmail.com');
 insert into employees (employee_id, first_name, last_name, email) values (2, 'Mike', 'Lanister', 'lanister@gmail.com');
 insert into employees (employee_id, first_name, last_name, email) values (3, 'Steve', 'Reeves', 'Reeves@gmail.com');
 insert into employees (employee_id, first_name, last_name, email) values (4, 'Ronald', 'Connor', 'connor@gmail.com');
