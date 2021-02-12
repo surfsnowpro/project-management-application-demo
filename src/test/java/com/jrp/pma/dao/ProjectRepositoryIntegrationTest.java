@@ -1,21 +1,23 @@
 package com.jrp.pma.dao;
 
-import com.jrp.pma.ProjectManagementApplication;
 import com.jrp.pma.entities.Project;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ContextConfiguration(classes = {ProjectManagementApplication.class})
+// Pulls in our project context which has all the beans we need
+// Not necessary if the package structure is the same as in our java (src) folder
+//@ContextConfiguration(classes = {ProjectManagementApplication.class})
+//@DataJpaTest // specific to junit repositories
+@SpringBootTest  // replaces @ContextConfiguration and @DataJpaTest since we have the same package structure
 @ExtendWith(SpringExtension.class)
-@DataJpaTest // specific to junit repositories
+// since we have ddl-auto enabled by default, we don't actually need these for these tests since tables are derived from entities
 @SqlGroup({
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql", "classpath:data.sql"}),
         // not needed since spring drops tables automatically
