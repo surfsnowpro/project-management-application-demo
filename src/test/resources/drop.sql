@@ -1,0 +1,3 @@
+DROP TABLE project_employee IF EXISTS;
+DROP TABLE projects IF EXISTS;
+DROP TABLE employees IF EXISTS;
