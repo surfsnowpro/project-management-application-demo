@@ -1,9 +1,9 @@
 package com.jrp.pma.controllers;
 
-import com.jrp.pma.dao.EmployeeRepository;
-import com.jrp.pma.dao.ProjectRepository;
 import com.jrp.pma.entities.Employee;
 import com.jrp.pma.entities.Project;
+import com.jrp.pma.services.EmployeeService;
+import com.jrp.pma.services.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,15 +17,15 @@ import java.util.List;
 @RequestMapping("/projects")
 public class ProjectController {
 
-    private final ProjectRepository projectRepo;
-    private final EmployeeRepository employeeRepo;
+    private final ProjectService projectService;
+    private final EmployeeService employeeService;
 
     public ProjectController(
-            ProjectRepository projectRepository,
-            EmployeeRepository employeeRepository
+            ProjectService projectService,
+            EmployeeService employeeService
     ) {
-        projectRepo = projectRepository;
-        employeeRepo = employeeRepository;
+        this.projectService = projectService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/new")
@@ -33,7 +33,7 @@ public class ProjectController {
         Project project = new Project();
         model.addAttribute("project", project);
 
-        List<Employee> employees = employeeRepo.findAll();
+        List<Employee> employees = employeeService.getAll();
         model.addAttribute("allEmployees", employees);
 
         return "projects/new-project";
@@ -41,7 +41,7 @@ public class ProjectController {
 
     @GetMapping
     public String displayProjects(Model model) {
-        List<Project> projects = projectRepo.findAll();
+        List<Project> projects = projectService.getAll();
         model.addAttribute("projects", projects);
 
         return "projects/list-projects.html";
@@ -49,7 +49,7 @@ public class ProjectController {
 
     @PostMapping(value = "/save")
     public String createProject(Project project, @RequestParam List<Long> employees, Model model) {
-        projectRepo.save(project);
+        projectService.save(project);
 
         // Use a redirect to prevent duplicate submissions
         return "redirect:/projects";
